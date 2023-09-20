@@ -1,7 +1,12 @@
+import Navbar from "@/components/Layouts/navbar/Navbar";
 import React from "react";
 
 const Home = () => {
-  return <div>hello</div>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 };
 
 export default Home;
