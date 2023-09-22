@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import "@radix-ui/themes/styles.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",

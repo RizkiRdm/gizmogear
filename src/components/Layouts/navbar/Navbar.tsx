@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import Logo from "../../Elements/navbar/Logo";
-import SearchInput from "../../Elements/navbar/SearchInput";
-import HamburgerButton from "../../Elements/navbar/HamburgerMenu";
-import MobileMenu from "../../Fragments/navbar/MobileMenu";
-
+import Logo from "@/components/Elements/navbar/Logo";
+import SearchInput from "@/components/Elements/navbar/SearchInput";
+import HamburgerButton from "@/components/Elements/navbar/HamburgerMenu";
+import MobileMenu from "@/components/Fragments/navbar/MobileMenu";
+import Button from "../Button/Button";
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="bg-gray-800 text-white p-4 border border-none rounded-sm">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Logo />
@@ -21,6 +21,12 @@ const Navbar: React.FC = () => {
 
         <div className="flex justify-center items-center">
           <SearchInput />
+        </div>
+
+        <div className="flex justify-center items-center gap-x-2 xs:hidden">
+          <Button label="cart" url="/cart" onClick={() => { }} />
+          <Button label="Login" url="/login" onClick={() => { }} />
+          <Button label="Register" url={"/register"} onClick={() => { }} />
         </div>
 
         {/* hamburger menu */}

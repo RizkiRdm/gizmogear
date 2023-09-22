@@ -4,5 +4,5 @@
 
 html,
 body {
-  @apply bg-slate-950 text-slate-50 p-4 min-h-screen;
+  @apply bg-slate-950 text-slate-50 m-4 min-h-screen;
 }

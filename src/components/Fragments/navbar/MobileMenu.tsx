@@ -25,9 +25,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             Close
           </button>
           <ul className="text-right mt-5">
-            <li className="py-2">Menu Item 1</li>
-            <li className="py-2">Menu Item 2</li>
-            <li className="py-2">Menu Item 3</li>
+            <li className="py-2">Login</li>
+            <li className="py-2">Register</li>
+            <li className="py-2">Cart</li>
           </ul>
         </motion.div>
       )}

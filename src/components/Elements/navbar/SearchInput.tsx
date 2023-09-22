@@ -4,8 +4,8 @@ const SearchInput: React.FC = () => {
   return (
     <input
       type="text"
-      placeholder="Search"
-      className="hidden md:block ml-4 px-2 py-1 bg-gray-700 rounded"
+      placeholder="Search Product"
+      className="md:block px-2 py-1 bg-gray-700 rounded w-full mx-auto"
     />
   );
 };

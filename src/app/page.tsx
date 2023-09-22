@@ -1,12 +1,8 @@
-import Navbar from "@/components/Layouts/navbar/Navbar";
+import HomePage from "@/components/Pages/HomePage";
 import React from "react";
 
 const Home = () => {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <HomePage />;
 };
 
 export default Home;
