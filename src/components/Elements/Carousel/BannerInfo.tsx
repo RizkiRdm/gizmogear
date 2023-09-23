@@ -18,7 +18,7 @@ const BannerInfo: React.FC<bannerProps> = ({ title, description, imageUrl }) => 
         <p className="text-gray-300 text-sm">{description}</p>
 
         {/* Link Buy Product */}
-        <ButtonBuy />
+        <ButtonBuy url={'/'} />
       </div>
     </div>
   );
