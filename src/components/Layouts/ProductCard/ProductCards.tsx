@@ -1,21 +1,29 @@
 import React from 'react'
 import ProductCard from '@/components/Fragments/ProductCard/ProductCard';
-import image1 from '../../../../public/wallhaven-gp26od.jpg';
 
-const data = [
-    {
-        imageSrc: image1,
-        title: 'product',
-        category: 'console',
-        productUrl: 'login',
-        price: 10
-    }
-]
+interface Product {
+    imageSrc: any
+    title: string
+    category: string
+    linkProduct: string
+    price: number
+}
 
-const ProductCards = () => {
+interface ProductDataProps {
+    product: Product
+}
+
+
+const ProductCards: React.FC<ProductDataProps> = ({ product }) => {
     return (
         <>
-            <ProductCard products={data} />
+            <ProductCard
+                categoryTitle={product.category}
+                title={product.title}
+                imageSrc={product.imageSrc}
+                price={product.price}
+                linkProduct={product.linkProduct}
+            />
         </>
     )
 }
