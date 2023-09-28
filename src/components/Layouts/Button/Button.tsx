@@ -5,12 +5,11 @@ import ButtonAnimation from "@/components/Fragments/Button/ButtonAnimation";
 interface BtnProps {
   label: string;
   url: string;
-  onClick: () => void;
 }
 
-const Button: React.FC<BtnProps> = ({ label, onClick, url }) => {
+const Button: React.FC<BtnProps> = ({ label, url }) => {
   return (
-    <ButtonAnimation onClick={onClick}>
+    <ButtonAnimation >
       <Label label={label} url={url} />
     </ButtonAnimation>
   );

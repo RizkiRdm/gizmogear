@@ -4,6 +4,8 @@ import Navbar from "../Layouts/navbar/Navbar";
 import Carousel from "../Layouts/CarouselHomepage/Carousel";
 import ProductCards from "../Layouts/ProductCard/ProductCards";
 import image1 from '../../../public/wallhaven-gp26od.jpg';
+import SliderArrow from "../Elements/Carousel/SliderArrow";
+import SliderProductCardSettings from "../Fragments/Carousel/SliderProductCardSettings";
 
 interface Product {
   id: number
@@ -38,6 +40,22 @@ const HomePage: React.FC = ({ }) => {
           imageSrc: image1,
           linkProduct: 'product1'
         },
+        {
+          id: 2,
+          category: 'console',
+          title: 'Product 3',
+          price: 10,
+          imageSrc: image1,
+          linkProduct: 'product1'
+        },
+        {
+          id: 2,
+          category: 'console',
+          title: 'Product 4',
+          price: 10,
+          imageSrc: image1,
+          linkProduct: 'product1'
+        },
       ]
       setProducts(data)
     }
@@ -55,12 +73,19 @@ const HomePage: React.FC = ({ }) => {
         </section>
 
         {/* slider product */}
-        <section className="mt-5 relative grid grid-cols-3 gap-5">
-          {products.map((product) => (
-            <div key={product.id}>
-              <ProductCards product={product} />
-            </div>
-          ))}
+        <section className="mt-5 relative ">
+          <div className="mb-5">
+            <h2 className="text-2xl font-semibold mb-3 flex items-center">
+              <span className="mr-2">Produk yang baru dirilis</span>
+            </h2>
+            <SliderProductCardSettings>
+              {products.map((product) => (
+                <div key={product.id} >
+                  <ProductCards product={product} />
+                </div>
+              ))}
+            </SliderProductCardSettings>
+          </div>
         </section>
       </main>
     </>

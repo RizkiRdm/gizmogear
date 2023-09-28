@@ -8,7 +8,7 @@ interface labelProps {
 const CardButon: React.FC<labelProps> = ({ label, productUrl }) => {
     return (
         <Link href={productUrl}>
-            <button className="bg-red-600 text-white px-3 py-1 rounded-sm">
+            <button className="bg-red-600 text-white px-3 py-1 rounded-md">
                 {label}
             </button>
         </Link>

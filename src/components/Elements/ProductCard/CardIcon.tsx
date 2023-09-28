@@ -3,8 +3,8 @@ import { FaHeart } from 'react-icons/fa';
 
 const CardIcon: React.FC = () => {
     return (
-        <button className='text-slate-100 text-xl'>
-            <FaHeart />
+        <button className='text-xl'>
+            <FaHeart className="text-slate-100 hover:text-red-600" />
         </button>
     )
 }

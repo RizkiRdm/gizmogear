@@ -17,6 +17,7 @@ interface ProductDataProps {
 const ProductCards: React.FC<ProductDataProps> = ({ product }) => {
     return (
         <>
+
             <ProductCard
                 categoryTitle={product.category}
                 title={product.title}

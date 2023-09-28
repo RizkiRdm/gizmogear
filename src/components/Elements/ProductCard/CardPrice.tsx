@@ -4,7 +4,7 @@ interface priceProps {
 }
 const CardPrice: React.FC<priceProps> = ({ price }) => {
     return (
-        <p className='font-bold text-3xl'>Rp.{price}</p>
+        <p className='font-bold text-xl'>Rp.{price}</p>
     )
 }
 

@@ -18,7 +18,8 @@ interface productCardProps {
 const ProductCard: React.FC<productCardProps> = ({ categoryTitle, title, imageSrc, price, linkProduct }) => {
     return (
         <>
-            <div className='border rounded-md p-4 relative'>
+
+            <div className='border border-md rounded-md p-4 shadow-md flex flex-col relative mx-4'>
                 <div className="flex flex-row items-center justify-between py-2">
                     <CardCategory categoryTitle={categoryTitle} />
                     <CardIcon />
