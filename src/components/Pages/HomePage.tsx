@@ -4,7 +4,6 @@ import Navbar from "../Layouts/navbar/Navbar";
 import Carousel from "../Layouts/CarouselHomepage/Carousel";
 import ProductCards from "../Layouts/ProductCard/ProductCards";
 import image1 from '../../../public/wallhaven-gp26od.jpg';
-import SliderArrow from "../Elements/Carousel/SliderArrow";
 import SliderProductCardSettings from "../Fragments/Carousel/SliderProductCardSettings";
 
 interface Product {
@@ -73,10 +72,10 @@ const HomePage: React.FC = ({ }) => {
         </section>
 
         {/* slider product */}
-        <section className="mt-5 relative ">
+        <section className="mt-5 relative">
           <div className="mb-5">
-            <h2 className="text-2xl font-semibold mb-3 flex items-center">
-              <span className="mr-2">Produk yang baru dirilis</span>
+            <h2 className="text-2xl font-semibold ml-5 my-4">
+              Produk yang baru dirilis
             </h2>
             <SliderProductCardSettings>
               {products.map((product) => (
