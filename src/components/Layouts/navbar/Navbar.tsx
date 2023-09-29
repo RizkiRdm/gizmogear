@@ -24,9 +24,9 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="flex justify-center items-center gap-x-2 xs:hidden">
-          <Button label="cart" url="/cart" onClick={() => { }} />
-          <Button label="Login" url="/login" onClick={() => { }} />
-          <Button label="Register" url={"/register"} onClick={() => { }} />
+          <Button label="cart" url="/cart" />
+          <Button label="Login" url="/login" />
+          <Button label="Register" url={"/register"} />
         </div>
 
         {/* hamburger menu */}
