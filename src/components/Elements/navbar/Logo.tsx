@@ -1,7 +1,12 @@
+import Link from "next/link";
 import React from "react";
 
 const Logo: React.FC = () => {
-  return <div className="text-2xl font-bold">Soping</div>;
+  return <div className="text-2xl font-bold">
+    <Link href={'/'}>
+      Soping
+    </Link>
+  </div>;
 };
 
 export default Logo;
