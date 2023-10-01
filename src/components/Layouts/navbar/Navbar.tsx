@@ -4,7 +4,7 @@ import Logo from "@/components/Elements/navbar/Logo";
 import SearchInput from "@/components/Elements/navbar/SearchInput";
 import HamburgerButton from "@/components/Elements/navbar/HamburgerMenu";
 import MobileMenu from "@/components/Fragments/navbar/MobileMenu";
-import Button from "../Button/Button";
+import Dropdown from "../Dropdown/Dropdown";
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -24,9 +24,7 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="flex justify-center items-center gap-x-2 xs:hidden">
-          <Button label="cart" url="/cart" />
-          <Button label="Login" url="/login" />
-          <Button label="Register" url={"/register"} />
+          <Dropdown />
         </div>
 
         {/* hamburger menu */}

@@ -5,6 +5,7 @@ import Carousel from "../Layouts/CarouselHomepage/Carousel";
 import ProductCards from "../Layouts/ProductCard/ProductCards";
 import image1 from '../../../public/wallhaven-gp26od.jpg';
 import SliderProductCardSettings from "../Fragments/Carousel/SliderProductCardSettings";
+import Footer from "../Layouts/Footer/Footer";
 
 interface Product {
   id: number
@@ -85,6 +86,10 @@ const HomePage: React.FC = ({ }) => {
               ))}
             </SliderProductCardSettings>
           </div>
+        </section>
+
+        <section>
+          <Footer />
         </section>
       </main>
     </>
