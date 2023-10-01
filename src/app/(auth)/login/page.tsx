@@ -1,7 +1,14 @@
 import Login from '@/components/Fragments/Form/Login'
-import LayoutForm from '@/components/Layouts/Form/LoginForm'
 import Link from 'next/link'
 import React from 'react'
+import type { Metadata } from "next";
+import LoginForm from '@/components/Layouts/Form/LoginForm';
+
+export const metadata: Metadata = {
+    title: "Login Page",
+    description: "Login page"
+};
+
 
 const LoginPage = () => {
 
@@ -10,17 +17,7 @@ const LoginPage = () => {
     }
     return (
         <>
-            <LayoutForm title='Login Page'>
-                <form action="">
-                    <Login />
-                </form>
-                <p className='capitalize text-slate-50'>
-                    have an account
-                    <span>
-                        <Link href={'register'} className='text-blue-400'> register here !</Link>
-                    </span>
-                </p>
-            </LayoutForm>
+            <LoginForm title='Login Page' />
         </>
     )
 }
