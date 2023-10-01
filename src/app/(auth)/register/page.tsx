@@ -1,5 +1,4 @@
 import Register from '@/components/Fragments/Form/Register'
-import LayoutForm from '@/components/Layouts/Form/LoginForm'
 import Link from 'next/link'
 import React from 'react'
 import type { Metadata } from "next";
