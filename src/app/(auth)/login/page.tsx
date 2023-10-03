@@ -9,10 +9,6 @@ export const metadata: Metadata = {
 
 
 const LoginPage = () => {
-
-    const handleSubmit = (e: any) => {
-        e.prevenDefault()
-    }
     return (
         <>
             <LoginForm title='Login Page' />
