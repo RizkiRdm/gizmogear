@@ -10,7 +10,7 @@ const DropdownMenuItems: React.FC = () => {
                 <DropdownLinks url='/register' label='Register' icon={FaUserPlus} />
                 <DropdownLinks url='/products' label='Products' icon={FaShoppingCart} />
                 <DropdownLinks url='/cart' label='Cart' icon={FaShoppingCart} />
-                <DropdownLinks url='/logout' label='Login' icon={FaSignOutAlt} />
+                <DropdownLinks url='/logout' label='Logout' icon={FaSignOutAlt} />
             </div>
         </>
     )
