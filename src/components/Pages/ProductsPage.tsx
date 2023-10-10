@@ -69,10 +69,6 @@ const ProductsPage: React.FC = () => {
                     ))}
                 </div>
             </section>
-
-            <section className='mt-10'>
-                <Footer />
-            </section>
         </>
     )
 }
