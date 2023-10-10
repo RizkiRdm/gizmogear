@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import BannerInfo from "@/components/Elements/Carousel/BannerInfo";
 
 interface Movie {
+  _id: number
   title: string
   description: string
   imageUrl: any
@@ -30,7 +31,7 @@ const SliderComponent: React.FC<Sliderprops> = ({ movies }) => {
     <Slider {...sliderSettings}>
       {movies.map((movie, index) => (
         <div key={index}>
-          <BannerInfo title={movie.title} description={movie.description} imageUrl={movie.imageUrl} />
+          <BannerInfo _id={movie._id} title={movie.title} description={movie.description} imageUrl={movie.imageUrl} />
         </div>
       ))}
     </Slider>);

@@ -1,9 +1,13 @@
-import Products from '@/components/Pages/Products'
+import ProductsPage from '@/components/Pages/ProductsPage'
 import React from 'react'
 
 const productsPages = () => {
     return (
-        <Products />
+        <>
+            <div className="mt-5 h-screen">
+                <ProductsPage />
+            </div>
+        </>
     )
 }
 

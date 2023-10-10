@@ -9,13 +9,13 @@ import CardCategory from '@/components/Elements/ProductCard/CardCategory';
 interface productCardProps {
     categoryTitle: string
     title: string
-    imageSrc: any
+    images: any
     price: number
-    linkProduct: string
+    _id: number
 
 }
 
-const ProductCard: React.FC<productCardProps> = ({ categoryTitle, title, imageSrc, price, linkProduct }) => {
+const ProductCard: React.FC<productCardProps> = ({ categoryTitle, title, images, price, _id }) => {
     return (
         <>
 
@@ -27,10 +27,10 @@ const ProductCard: React.FC<productCardProps> = ({ categoryTitle, title, imageSr
                 <div className="text-center mb-4">
                     <CardTitle title={title} />
                 </div>
-                <CardImage src={imageSrc} alt={title} />
+                <CardImage src={images} alt={title} />
                 <div className="flex flex-row items-center justify-between mt-3">
                     <CardPrice price={price} />
-                    <CardButon label='Buy Product' productUrl={linkProduct} />
+                    <CardButon label='Buy Product' productUrl={`/products/${_id}`} />
                 </div>
             </div>
         </>

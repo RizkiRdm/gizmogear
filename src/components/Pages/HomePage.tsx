@@ -8,11 +8,10 @@ import SliderProductCardSettings from "../Fragments/Carousel/SliderProductCardSe
 import Footer from "../Layouts/Footer/Footer";
 
 interface Product {
-  id: number
-  imageSrc: any
+  _id: number
+  images: any
   title: string
   category: string
-  linkProduct: string
   price: number
 }
 
@@ -25,36 +24,32 @@ const HomePage: React.FC = ({ }) => {
     const fetchingData = async () => {
       const data: Product[] = [
         {
-          id: 1,
+          _id: 1,
           category: 'console',
           title: 'Product 1',
           price: 100000,
-          imageSrc: image1,
-          linkProduct: 'product1'
+          images: image1,
         },
         {
-          id: 2,
+          _id: 2,
           category: 'console',
           title: 'Product 2',
           price: 10,
-          imageSrc: image1,
-          linkProduct: 'product1'
+          images: image1,
         },
         {
-          id: 2,
+          _id: 3,
           category: 'console',
           title: 'Product 3',
           price: 10,
-          imageSrc: image1,
-          linkProduct: 'product1'
+          images: image1,
         },
         {
-          id: 2,
+          _id: 4,
           category: 'console',
           title: 'Product 4',
           price: 10,
-          imageSrc: image1,
-          linkProduct: 'product1'
+          images: image1,
         },
       ]
       setProducts(data)
@@ -80,7 +75,7 @@ const HomePage: React.FC = ({ }) => {
             </h2>
             <SliderProductCardSettings>
               {products.map((product) => (
-                <div key={product.id} >
+                <div key={product._id} >
                   <ProductCards product={product} />
                 </div>
               ))}

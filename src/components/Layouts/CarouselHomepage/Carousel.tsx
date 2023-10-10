@@ -5,11 +5,13 @@ const Carousel = () => {
 
   const movies = [
     {
+      _id: 1,
       title: 'Movie 1',
       description: 'This is a great movie!',
       imageUrl: image1,
     },
     {
+      _id: 2,
       title: 'Movie 1',
       description: 'This is a great movie!',
       imageUrl: image1,
