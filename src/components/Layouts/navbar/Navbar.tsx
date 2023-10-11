@@ -1,15 +1,8 @@
-"use client";
 import Logo from "@/components/Elements/navbar/Logo";
 import SearchInput from "@/components/Elements/navbar/SearchInput";
 import React, { useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
 const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
     <nav className="bg-gray-800 text-white p-4 border border-none rounded-sm">
       <div className="container mx-auto flex justify-between items-center">
