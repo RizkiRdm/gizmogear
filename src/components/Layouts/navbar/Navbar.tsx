@@ -1,9 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import Logo from "@/components/Elements/navbar/Logo";
 import SearchInput from "@/components/Elements/navbar/SearchInput";
-import HamburgerButton from "@/components/Elements/navbar/HamburgerMenu";
-import MobileMenu from "@/components/Fragments/navbar/MobileMenu";
+import React, { useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,11 +25,6 @@ const Navbar: React.FC = () => {
           <Dropdown />
         </div>
 
-        {/* hamburger menu */}
-        <HamburgerButton onClick={toggleMenu} isOpen={isMenuOpen} />
-
-        {/* Mobile menu */}
-        <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
       </div>
     </nav>
   );
