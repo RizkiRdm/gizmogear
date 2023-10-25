@@ -17,6 +17,18 @@ class ProductController extends Controller
         return new ProductResource(true, 'list products', $products);
     }
 
+    // GET data by ID
+    public function show($id)
+    {
+        $productId = Product::findOrFail($id);
+
+        if ($productId) {
+            return new ProductResource(true, 'product', $productId);
+        } else {
+            return response()->json(['message' => 'not found'], 404);
+        }
+    }
+
     // POST data
     public function store(Request $request)
     {
