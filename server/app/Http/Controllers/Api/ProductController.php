@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -18,12 +19,12 @@ class ProductController extends Controller
     }
 
     // GET data by ID
-    public function show($id)
+    public function show($slug)
     {
-        $productId = Product::findOrFail($id);
+        $productTitle = Product::where('slug', $slug)->first();
 
-        if ($productId) {
-            return new ProductResource(true, 'product', $productId);
+        if ($productTitle) {
+            return new ProductResource(true, 'product', $productTitle);
         } else {
             return response()->json(['message' => 'not found'], 404);
         }
@@ -38,8 +39,24 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Batasan ukuran maksimal 2MB
+        ], [
+            'title.required' => 'Judul harus diisi.',
+            'title.max' => 'Judul tidak boleh melebihi 255 karakter.',
+            'category.required' => 'Kategori harus diisi.',
+            'category.max' => 'Kategori tidak boleh melebihi 255 karakter.',
+            'description.required' => 'Deskripsi harus diisi.',
+            'price.required' => 'Harga harus diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar tidak valid. Gunakan format jpeg, png, jpg, atau gif.',
+            'image.max' => 'Ukuran gambar tidak boleh melebihi 2MB.',
         ]);
 
+        // make slug
+        $slug =  Str::slug($data['title']) . '-' . Str::random(10);
+        $data['slug'] = $slug;
+
+        // store data
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $image->hashName();
@@ -67,10 +84,22 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
+            'slug' => 'required',
             'category' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Batasan ukuran maksimal 2MB
+        ], [
+            'title.required' => 'Judul harus diisi.',
+            'title.max' => 'Judul tidak boleh melebihi 255 karakter.',
+            'category.required' => 'Kategori harus diisi.',
+            'category.max' => 'Kategori tidak boleh melebihi 255 karakter.',
+            'description.required' => 'Deskripsi harus diisi.',
+            'price.required' => 'Harga harus diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar tidak valid. Gunakan format jpeg, png, jpg, atau gif.',
+            'image.max' => 'Ukuran gambar tidak boleh melebihi 2MB.',
         ]);
 
         if (!$data) {
@@ -79,6 +108,15 @@ class ProductController extends Controller
 
         // find product by ID
         $product = Product::find($id);
+
+
+        // make new slug
+        $slug = Str::slug($data['title']) . '-' . Str::random(10);
+
+        // hapus slug lama
+        if (file_exists(public_path($product->slug))) {
+            unlink(public_path($product->slug));
+        }
 
         if ($request->hasFile('image')) {
 
@@ -94,6 +132,7 @@ class ProductController extends Controller
         } else {
             $product->update([
                 'title' => $request->title,
+                'slug' => $slug,
                 'category' => $request->category,
                 'description' => $request->description,
                 'price' => $request->price,
