@@ -34,7 +34,12 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('username', 'password'))) {
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['access_token' => $token, 'token_type' => 'Bearer', 'message' => 'success']);
+            // Sertakan informasi role pengguna dalam respons
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'role' => $user->role, // Sertakan role pengguna dalam respons
+            ]);
         }
         return response()->json(['error' => 'unathorized'], 401);
     }

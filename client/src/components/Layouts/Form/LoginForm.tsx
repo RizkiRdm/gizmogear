@@ -11,9 +11,7 @@ const LoginForm: React.FC<handleSubmitProps> = ({ title }) => {
             <div className="flex justify-center items-center h-screen">
                 <div className="bg-zinc-800 p-6 rounded-md shadow-md w-96">
                     <h2 className='font-bold text-2xl text-left'>{title}</h2>
-                    <form action="">
-                        <Login />
-                    </form>
+                    <Login />
                     <p className='text-slate-50 text-sm'>
                         don{"'"}t have an account
                         <span>
