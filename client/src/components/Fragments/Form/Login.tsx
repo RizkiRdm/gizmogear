@@ -13,7 +13,13 @@ interface IFormsInputs {
 
 const Login: React.FC = () => {
     const [token, setToken] = useState(null)
-    const { register, handleSubmit } = useForm<IFormsInputs>()
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors }
+    } = useForm<IFormsInputs>()
+
     const router = useRouter()
 
     const onSubmit: SubmitHandler<IFormsInputs> = async (data?) => {
@@ -46,7 +52,6 @@ const Login: React.FC = () => {
                 null
             ) : (
                 <div >
-                    <Notification message='gagal login' />
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="my-2">
                             <input
@@ -55,6 +60,7 @@ const Login: React.FC = () => {
                                 {...register('username', { required: 'Input your username' })}
                                 className='w-full p-3 bg-zinc-500 rounded-md text-white'
                             />
+                            {errors.username && <p className='text-red-500 font-bold'>{errors.username.message}</p>}
                         </div >
                         <div className="my-2">
                             <input
@@ -63,6 +69,7 @@ const Login: React.FC = () => {
                                 {...register('password', { required: 'Input your password' })}
                                 className='w-full p-3 bg-zinc-500 rounded-md text-white'
                             />
+                            {errors.password && <p className='text-red-500 font-bold'>{errors.password.message}</p>}
                         </div>
                         <div className="my-2">
                             <ButtonForm label='Login' />
