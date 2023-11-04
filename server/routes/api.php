@@ -22,8 +22,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 // Rute CRUD produk hanya bisa diakses oleh admin
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::apiResource('/products', ProductController::class)->only(['store', 'update', 'destroy']);
-});
+// Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+// });
+Route::apiResource('/products', ProductController::class);
 
 Route::apiResource('/products', ProductController::class)->except(['store', 'update', 'destroy']);
