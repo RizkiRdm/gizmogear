@@ -5,12 +5,12 @@ import {
     HStack,
     IconButton,
     Stack,
-    useColorModeValue,
+    Text,
     useDisclosure
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import NavLink from './NavbarLink'
 import NavbarDropdown from './NavbarDropdown'
+import NavLink from './NavbarLink'
 import NavbarSearch from './NavbarSearch'
 
 const Links = [
@@ -25,7 +25,7 @@ const Navbar = () => {
 
     return (
         <>
-            <Box px={4} bg={'teal.600'} color={'black'}>
+            <Box px={4} bg={'blackAlpha.900'} color={'gray.100'}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
 
                     <IconButton
@@ -36,13 +36,18 @@ const Navbar = () => {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box as={Link} to={'/'}>GizmoGear</Box>
+                        {/* Logo */}
+                        <Box as={Link} to={'/'}>
+                            <Text as={'p'} fontWeight={"bold"}>GizmoGear</Text>
+                        </Box>
+
+                        {/* link navbar */}
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link, index) => (
                                 <NavLink key={index} to={link.url}>{link.name}</NavLink>
                             ))}
                         </HStack>
-                        <HStack spacing={4} display={{ md: 'flex' }}>
+                        <HStack spacing={4} display={{ md: 'flex' }} mx={"auto"}>
                             <NavbarSearch />
                         </HStack>
                     </HStack>
