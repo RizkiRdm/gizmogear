@@ -108,4 +108,17 @@ class ProductController extends Controller
             return new ProductResource(true, 'failed', null);
         }
     }
+
+    // search product
+    public function search(Request $request)
+    {
+        $query = Str::slug($request->input('q')); // Mengonversi nama produk menjadi slug
+        $products = Product::where('slug', 'like', "%$query%")->get();
+
+        // Mengembalikan hasil pencarian dalam format yang diinginkan
+        return response()->json([
+            'data' => $products,
+            'url' => "q=$query"
+        ]);
+    }
 }
