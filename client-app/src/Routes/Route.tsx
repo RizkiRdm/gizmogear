@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../views/Dashboard";
-import ProductManagement from "../views/Dashboard/ProductManagement";
-import UserManagement from "../views/Dashboard/UserManagement";
-import Hompage from "../views/Hompage";
-import DetailProduct from "../views/Products/Detail";
-import ProductsPage from "../views/Products/ProductsPage";
-import Login from "../views/auth/Login";
-import Register from "../views/auth/Register";
+import Dashboard from "../pages/Dashboard";
+import ProductManagement from "../pages/Dashboard/ProductManagement";
+import UserManagement from "../pages/Dashboard/UserManagement";
+import Hompage from "../pages/Hompage";
+import DetailProduct from "../pages/Products/Detail";
+import ProductsPage from "../pages/Products/ProductsPage";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
 
 const App: React.FC = () => {
     return (

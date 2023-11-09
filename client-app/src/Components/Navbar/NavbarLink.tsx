@@ -16,7 +16,7 @@ const NavLink: React.FC<linkProps> = ({ children, to }) => {
             rounded={'md'}
             _hover={{
                 textDecoration: 'none',
-                bg: useColorModeValue('gray.200', 'gray.700'),
+                bg: useColorModeValue('gray.700', 'gray.900'),
             }}
             to={to}>
             {children}

@@ -1,4 +1,4 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react"
+import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 
 const authLink = [
@@ -20,12 +20,13 @@ const NavbarDropdown = () => {
                 rounded={'full'}
                 variant={'link'}
                 cursor={'pointer'}
-                minW={0}>
-                <Text as={'p'} fontSize='14px' color={"black"}>Hello, username</Text>
+                minW={0}
+            >
+                <Text as={'p'} fontSize='14px' color={"gray.100"}>Hello, username</Text>
             </MenuButton>
             <MenuList>
                 {authLink.map((link, index) => (
-                    <MenuItem as={Link} key={index} to={link.url}>{link.name}</MenuItem>
+                    <MenuItem as={Link} key={index} to={link.url} color={"gray.700"}>{link.name}</MenuItem>
                 ))}
             </MenuList>
         </Menu>

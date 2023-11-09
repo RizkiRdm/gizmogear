@@ -35,9 +35,9 @@ const Navbar = () => {
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
                     />
-                    <HStack spacing={8} alignItems={'center'}>
+                    <HStack spacing={8} alignItems={'center'} flex={1} mx={2}>
                         {/* Logo */}
-                        <Box as={Link} to={'/'}>
+                        <Box as={Link} to={'/'} flexShrink={0}>
                             <Text as={'p'} fontWeight={"bold"}>GizmoGear</Text>
                         </Box>
 
@@ -47,14 +47,15 @@ const Navbar = () => {
                                 <NavLink key={index} to={link.url}>{link.name}</NavLink>
                             ))}
                         </HStack>
-                        <HStack spacing={4} display={{ md: 'flex' }} mx={"auto"}>
-                            <NavbarSearch />
-                        </HStack>
+                        <Flex alignItems="center" justifyContent="center" flex={1}>
+                            <HStack spacing={4} display={{ md: 'flex' }} mx={"auto"}>
+                                <NavbarSearch />
+                            </HStack>
+                        </Flex>
+                        <Flex alignItems={'center'} display={{ base: 'none', md: 'flex' }}>
+                            <NavbarDropdown />
+                        </Flex>
                     </HStack>
-
-                    <Flex alignItems={'center'}>
-                        <NavbarDropdown />
-                    </Flex>
                 </Flex>
 
                 {isOpen ? (
@@ -63,6 +64,9 @@ const Navbar = () => {
                             {Links.map((link, index) => (
                                 <NavLink key={index} to={link.url}>{link.name}</NavLink>
                             ))}
+                            <Flex justify={"start"} ms={2}>
+                                <NavbarDropdown />
+                            </Flex>
                         </Stack>
                     </Box>
                 ) : null}
