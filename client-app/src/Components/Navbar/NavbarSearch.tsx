@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { searchResultState } from '../../Recoil/atom';
+import { Link } from 'react-router-dom';
 
 const SearchInput: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -86,14 +87,16 @@ const SearchInput: React.FC = () => {
                                 width={'full'}
                                 mt={1}
                             >
-                                <ListItem
-                                    cursor="pointer"
-                                    px="4"
-                                    py="2"
-                                    onClick={() => handleSuggestionClick(suggestion.title)}
-                                >
-                                    {suggestion.title}
-                                </ListItem>
+                                <Link to={`/products/${suggestion.slug}`}>
+                                    <ListItem
+                                        cursor="pointer"
+                                        px="4"
+                                        py="2"
+                                        onClick={() => handleSuggestionClick(suggestion.title)}
+                                    >
+                                        {suggestion.title}
+                                    </ListItem>
+                                </Link>
                             </List>
                         ))
                     ) : (
