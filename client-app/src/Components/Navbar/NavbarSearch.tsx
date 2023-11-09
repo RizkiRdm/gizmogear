@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { Box, Input, List, Text } from '@chakra-ui/react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
-import { searchResultState } from '../../Recoil/atom'; // Definisikan state Recoil di sini
-import axios from 'axios';
+import { Box, Input, List, ListItem } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { searchResultState } from '../../Recoil/atom';
 
-const SearchComponent: React.FC = () => {
-    const [searchResults, setSearchResults] = useRecoilState(searchResultState);
-    const { control, handleSubmit } = useForm();
+const SearchInput: React.FC = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [searchResults, setSearchResults] = useRecoilState(searchResultState);
+    const { register } = useForm();
 
     const debouncedSearch = (query: string) => {
         setLoading(true);
-        // TODOS : change api
-        axios.get(`/api/search?query=${query}`)
+        axios.get(`http://localhost:8000/api/products/search?q=${query}`)
             .then((response) => {
-                setSearchResults(response.data);
+                setSearchResults(response.data.data);
+                setShowSuggestions(true);
                 setLoading(false);
             })
             .catch((error) => {
@@ -25,38 +27,87 @@ const SearchComponent: React.FC = () => {
             });
     };
 
-    const onSubmit: SubmitHandler<{ searchQuery: string }> = ({ searchQuery }) => {
-        debouncedSearch(searchQuery);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+
+        if (term === '') {
+            setShowSuggestions(false); // Sembunyikan saran ketika input kosong
+        } else {
+            // Hanya panggil debouncedSearch setelah pengguna berhenti mengetik selama 500ms
+            setTimeout(() => {
+                debouncedSearch(term);
+            }, 500);
+        }
+    };
+
+    const handleSuggestionClick = (suggestion: string) => {
+        setSearchTerm(suggestion);
+        setShowSuggestions(false);
     };
 
     return (
-        <Box>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                    name="searchQuery"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                        <Input {...field} placeholder="Cari item..." color={'black'} />
-                    )}
-                />
-            </form>
-            {loading && <Text>Mencari...</Text>}
-            {searchResults.length > 0 && !loading && (
+        <Box
+            position={'relative'}
+            bg={'gray.900'}
+            className="relative text-slate-950"
+            width={'100%'} // Menggunakan responsif utility classes
+            mx="auto"
+        >
+            <Input
+                {...register('query')}
+                type="text"
+                value={searchTerm}
+                onChange={handleInputChange}
+                placeholder="Cari barang..."
+                borderWidth="1px"
+                rounded="md"
+                p="2"
+                w="100%"
+            />
+            {showSuggestions && (
                 <motion.ul
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
                 >
-                    {searchResults.map((result, index) => (
-                        <List key={index}>{result}</List>
-                    ))}
+                    {loading ? (
+                        <List zIndex={1} position={'absolute'} bg={'gray.900'} width={'full'} px="4" py="2">
+                            <ListItem>Loading...</ListItem>
+                        </List>
+                    ) : searchResults.length > 0 ? (
+                        searchResults.map((suggestion) => (
+                            <List
+                                key={suggestion.id}
+                                zIndex={1}
+                                position={'absolute'}
+                                bg={'gray.900'}
+                                width={'full'}
+                                mt={1}
+                            >
+                                <ListItem
+                                    cursor="pointer"
+                                    px="4"
+                                    py="2"
+                                    onClick={() => handleSuggestionClick(suggestion.title)}
+                                >
+                                    {suggestion.title}
+                                </ListItem>
+                            </List>
+                        ))
+                    ) : (
+                        // Sembunyikan pesan "Barang tidak ditemukan" ketika input tidak kosong
+                        searchTerm !== '' && (
+                            <List zIndex={1} position={'absolute'} bg={'gray.900'} width={'full'} px="4" py="2">
+                                <ListItem>Barang tidak ditemukan</ListItem>
+                            </List>
+                        )
+                    )}
                 </motion.ul>
             )}
-
         </Box>
     );
 };
 
-export default SearchComponent;
+export default SearchInput;
