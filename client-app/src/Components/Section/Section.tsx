@@ -7,8 +7,16 @@ import {
     Text,
     useBreakpointValue,
 } from '@chakra-ui/react'
-
-const Section = () => {
+import { Link } from 'react-router-dom'
+interface productsProps {
+    title: string
+    description: string
+    category: string
+    slug: string
+    src: string
+}
+const Section: React.FC<productsProps> = ({ title, description, slug, category, src }) => {
+    const descripttionProduct = description.split(" ").slice(0, 20).join(" ") + ("")
     return (
         <Stack
             minH={'50vh'}
@@ -36,41 +44,42 @@ const Section = () => {
                                 zIndex: -1,
                             }}
                         >
-                            Samsung
+                            {/* title product */}
+                            {title}
                         </Text>
 
                         <br />{' '}
-
+                        {/* category product */}
                         <Text color={'teal.400'} as={'span'}>
-                            Design Projects
+                            {category}
                         </Text>{' '}
                     </Heading>
 
+                    {/* description product */}
                     <Text fontSize={{ base: '2xl', lg: 'xl' }} color={'gray.500'}>
-                        The project board is an exclusive resource for contract work. It&apos;s
-                        perfect for freelancers, agencies, and moonlighters.
+                        {descripttionProduct}
                     </Text>
                     <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-                        <Button
-                            rounded={'md'}
-                            bg={'blue.400'}
-                            color={'white'}
-                            _hover={{
-                                bg: 'blue.500',
-                            }}>
-                            Show More About Product
-                        </Button>
+                        <Link to={`/products/${slug}`}>
+                            <Button
+                                rounded={'md'}
+                                bg={'blue.400'}
+                                color={'white'}
+                                _hover={{
+                                    bg: 'blue.500',
+                                }}>
+                                Show More About Product
+                            </Button>
+                        </Link>
                     </Stack>
                 </Stack>
             </Flex>
             {/* image product */}
             <Flex flex={1}>
                 <Image
-                    alt={'Login Image'}
+                    alt={title}
                     objectFit={'cover'}
-                    src={
-                        'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-                    }
+                    src={src}
                 />
             </Flex>
         </Stack>

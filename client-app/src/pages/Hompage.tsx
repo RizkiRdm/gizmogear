@@ -1,14 +1,37 @@
 import { Box, Button, Flex, Heading, SimpleGrid } from "@chakra-ui/react"
+import axios from 'axios'
+import { useQuery } from 'react-query'
+import { Link } from "react-router-dom"
 import Carousel from "../Components/Carousel/carousel"
+import Footer from "../Components/Footer/Footer"
 import Navbar from "../Components/Navbar/Navbar"
 import ProductCard from "../Components/ProductCard/ProductCard"
 import Section from "../Components/Section/Section"
-import { Link } from "react-router-dom"
-import Footer from "../Components/Footer/Footer"
 
-const IMAGE = 'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+interface ProductProps {
+    id: number;
+    title: string;
+    slug: string;
+    image: string;
+    price: number;
+}
+
+// fetch data product
+const fetchProducts = async () => {
+    try {
+        const res = await axios.get('http://localhost:8000/api/products/')
+        const dataProduct: ProductProps[] = res.data.data
+        return dataProduct
+    } catch (error) {
+        console.error(error)
+    }
+
+}
+
 
 const Hompage = () => {
+    const { data, isLoading, isError } = useQuery('fetchProducts', fetchProducts)
+    if (isError) return <p>error fetching data</p>
     return (
         <>
             <Navbar />
@@ -31,9 +54,21 @@ const Hompage = () => {
                     minWidth={"max-content"}
                     bg={"whitesmoke"}
                 >
-                    <SimpleGrid columns={[1, 2, 3]} spacing={2}>
-                        <ProductCard title={"Samsung S23 FE"} slug={"product-1"} src={IMAGE} price={100} />
-                    </SimpleGrid>
+                    {isLoading ? (
+                        <p>loading..</p>
+                    ) : (
+                        <SimpleGrid columns={[1, 2, 3]} spacing={2}>
+                            {data?.map((product) => (
+                                <ProductCard
+                                    key={product.id}
+                                    src={product.image}
+                                    title={product.title}
+                                    slug={product.slug}
+                                    price={product.price}
+                                />
+                            ))}
+                        </SimpleGrid>
+                    )}
                 </Flex>
             </Box>
 
@@ -52,7 +87,13 @@ const Hompage = () => {
 
             {/* section */}
             <Box my={3}>
-                <Section />
+                <Section
+                    src={"dakkjfajdkfjak"}
+                    title={'1'}
+                    description={"dajfkjadfjadjf df djkahfjadhf kdhak f"}
+                    category={"cagakfa"}
+                    slug={"kjdakfafj"}
+                />
             </Box>
 
             {/* footer */}
