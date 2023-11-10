@@ -16,7 +16,7 @@ class Product extends Model
     protected function Image(): Attribute
     {
         return Attribute::make(
-            get: fn ($image) => asset('storage/images' . $image)
+            get: fn ($image) => asset('/storage/images/' . $image)
         );
     }
 }
