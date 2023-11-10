@@ -10,7 +10,7 @@ interface bannerProps {
 }
 
 const CarouselHero: React.FC<bannerProps> = ({ slug, title, src, description }) => {
-    const descripttionProduct = description.split(" ").slice(0, 10).join(" ") + ("")
+    const descripttionProduct = description.split(" ").slice(0, 10).join(" ")
     return (
         <Flex
             direction={{ base: "column", md: "row" }} // Flex direction column for mobile and tablet, row for larger screens
