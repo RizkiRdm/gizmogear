@@ -63,19 +63,23 @@ const carousel: React.FC = () => {
                     px={4}
                 >
                     <IconButton
+                        colorScheme='teal'
+                        display={{ base: 'none', md: 'flex' }}
                         aria-label="Previous"
                         icon={<ChevronLeftIcon />}
                         fontSize="2xl"
                         onClick={() => { slides?.slickPrev() } /* Fungsi untuk navigasi ke slide sebelumnya */}
                     />
                     <IconButton
+                        colorScheme='teal'
+                        display={{ base: 'none', md: 'flex' }}
                         aria-label="Next"
                         icon={<ChevronRightIcon />}
                         fontSize="2xl"
                         onClick={() => { slides?.slickNext() } /* Fungsi untuk navigasi ke slide berikutnya */}
                     />
                 </Flex>
-            </Box>
+            </Box >
 
         </>
     )
