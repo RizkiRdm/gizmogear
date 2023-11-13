@@ -23,7 +23,6 @@ const Hompage = () => {
     }
 
     const { data: latestProductData, isLoading: isLoadingLatestProduct, isError: isErrorLatestProduct } = useQuery('fetchLatestProduct', fetchLatestProduct);
-    console.log(threeProduct)
     if (isError || isErrorThreeProduct || isErrorLatestProduct) return <p>Error fetching data</p>;
 
     return (
