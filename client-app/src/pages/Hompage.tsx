@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Heading, SimpleGrid } from "@chakra-ui/react"
-import axios from 'axios'
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Box, Button, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react"
 import { useQuery } from 'react-query'
 import { Link } from "react-router-dom"
 import Carousel from "../Components/Carousel/carousel"
@@ -7,38 +7,36 @@ import Footer from "../Components/Footer/Footer"
 import Navbar from "../Components/Navbar/Navbar"
 import ProductCard from "../Components/ProductCard/ProductCard"
 import Section from "../Components/Section/Section"
-
-interface ProductProps {
-    id: number;
-    title: string;
-    slug: string;
-    image: string;
-    price: number;
-}
-
-// fetch data product
-const fetchProducts = async () => {
-    try {
-        const res = await axios.get('http://localhost:8000/api/products/')
-        const dataProduct: ProductProps[] = res.data.data
-        return dataProduct
-    } catch (error) {
-        console.error(error)
-    }
-
-}
+import { fetchLatestProduct, fetchSixProduct, fetchThreeProduct } from "../api/api"
+import { useRecoilState } from "recoil"
+import { ThreeProductState } from "../Recoil/atom"
 
 
 const Hompage = () => {
-    const { data, isLoading, isError } = useQuery('fetchProducts', fetchProducts)
-    if (isError) return <p>error fetching data</p>
+    const [threeProduct, setThreeProduct] = useRecoilState(ThreeProductState);
+
+
+    const { data, isLoading, isError } = useQuery('fetchSixProduct', fetchSixProduct);
+    const { data: threeProductData, isLoading: isLoadingThreeProduct, isError: isErrorThreeProduct } = useQuery('fetchThreeProduct', fetchThreeProduct);
+    if (threeProductData) {
+        setThreeProduct(threeProductData)
+    }
+
+    const { data: latestProductData, isLoading: isLoadingLatestProduct, isError: isErrorLatestProduct } = useQuery('fetchLatestProduct', fetchLatestProduct);
+    console.log(threeProduct)
+    if (isError || isErrorThreeProduct || isErrorLatestProduct) return <p>Error fetching data</p>;
+
     return (
         <>
             <Navbar />
 
             {/* homepage */}
             <Box mt={"2"} mb={"4"}>
-                <Carousel />
+                {isLoadingThreeProduct ? (
+                    <Text>Loading...</Text>
+                ) : threeProductData && (
+                    <Carousel />
+                )}
             </Box>
 
             {/* Best Product */}
@@ -55,7 +53,7 @@ const Hompage = () => {
                     bg={"whitesmoke"}
                 >
                     {isLoading ? (
-                        <p>loading..</p>
+                        <Text>loading..</Text>
                     ) : (
                         <SimpleGrid columns={[1, 2, 3]} spacing={2}>
                             {data?.map((product) => (
@@ -87,15 +85,8 @@ const Hompage = () => {
 
             {/* section */}
             <Box my={3}>
-                <Section
-                    src={"dakkjfajdkfjak"}
-                    title={'1'}
-                    description={"dajfkjadfjadjf df djkahfjadhf kdhak f"}
-                    category={"cagakfa"}
-                    slug={"kjdakfafj"}
-                />
+                {isLoadingLatestProduct ? (<Text>Loading...</Text>) : (<Section latestProduct={latestProductData} />)}
             </Box>
-
             {/* footer */}
             <Footer />
         </>
