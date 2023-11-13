@@ -4,6 +4,8 @@ import {
     Flex,
     HStack,
     IconButton,
+    MenuItem,
+    MenuList,
     Stack,
     Text,
     useDisclosure
@@ -17,6 +19,17 @@ const Links = [
     {
         url: "/products",
         name: 'Products'
+    },
+]
+
+const authLink = [
+    {
+        url: "/login",
+        name: 'Login'
+    },
+    {
+        url: "/register",
+        name: 'Register'
     },
 ]
 
@@ -53,24 +66,37 @@ const Navbar = () => {
                             </HStack>
                         </Flex>
                         <Flex alignItems={'center'} display={{ base: 'none', md: 'flex' }}>
-                            <NavbarDropdown />
+                            <NavbarDropdown label={`Hello`}>
+                                <MenuList>
+                                    {authLink.map((link, index) => (
+                                        <MenuItem as={Link} key={index} to={link.url} color={"gray.700"}>{link.name}</MenuItem>
+                                    ))}
+                                </MenuList>
+                            </NavbarDropdown>
                         </Flex>
                     </HStack>
-                </Flex>
+                </Flex >
 
-                {isOpen ? (
-                    <Box pb={4} display={{ md: 'none' }}>
-                        <Stack as={'nav'} spacing={4}>
-                            {Links.map((link, index) => (
-                                <NavLink key={index} to={link.url}>{link.name}</NavLink>
-                            ))}
-                            <Flex justify={"start"} ms={2}>
-                                <NavbarDropdown />
-                            </Flex>
-                        </Stack>
-                    </Box>
-                ) : null}
-            </Box>
+                {
+                    isOpen ? (
+                        <Box pb={4} display={{ md: 'none' }} >
+                            <Stack as={'nav'} spacing={4}>
+                                {Links.map((link, index) => (
+                                    <NavLink key={index} to={link.url}>{link.name}</NavLink>
+                                ))}
+                                <Flex justify={"start"} ms={2}>
+                                    <NavbarDropdown label={`Hello`}>
+                                        <MenuList>
+                                            {authLink.map((link, index) => (
+                                                <MenuItem as={Link} key={index} to={link.url} color={"gray.700"}>{link.name}</MenuItem>
+                                            ))}
+                                        </MenuList>
+                                    </NavbarDropdown>
+                                </Flex>
+                            </Stack >
+                        </Box >
+                    ) : null}
+            </Box >
         </>
     )
 }
