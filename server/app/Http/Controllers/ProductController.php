@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -107,18 +109,5 @@ class ProductController extends Controller
         } else {
             return new ProductResource(true, 'failed', null);
         }
-    }
-
-    // search product
-    public function search(Request $request)
-    {
-        $query = Str::slug($request->input('q')); // Mengonversi nama produk menjadi slug
-        $products = Product::where('slug', 'like', "%$query%")->get();
-
-        // Mengembalikan hasil pencarian dalam format yang diinginkan
-        return response()->json([
-            'data' => $products,
-            'url' => "q=$query"
-        ]);
     }
 }
