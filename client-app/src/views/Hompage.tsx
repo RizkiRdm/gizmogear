@@ -1,4 +1,3 @@
-
 const Hompage = () => {
     return (
         <div>Hompage</div>
