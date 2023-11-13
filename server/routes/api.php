@@ -26,9 +26,6 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 // });
 Route::apiResource('/products', ProductController::class);
 
-<<<<<<< Updated upstream
-Route::apiResource('/products', ProductController::class)->except(['store', 'update', 'destroy']);
-=======
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']); // Endpoint untuk mendapatkan semua produk
     Route::post('/', [ProductController::class, 'store']); // Endpoint untuk membuat produk baru
@@ -39,4 +36,3 @@ Route::prefix('products')->group(function () {
     Route::get('/random-six-product', [ProductController::class, 'getSixProduct']); // Endpoint untuk mendapatkan 6 produk secara acak
     Route::get('/random-three-product', [ProductController::class, 'getThreeProduct']); // Endpoint untuk mendapatkan 6 produk secara acak
 });
->>>>>>> Stashed changes

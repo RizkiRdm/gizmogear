@@ -152,7 +152,7 @@ class ProductController extends Controller
         return new ProductResource(false, 'not eligible for random six product', null);
     }
 
-    // get 6 data product
+    // get 3 data product
     public function getThreeProduct()
     {
         $cacheKey = 'random_three_product';
