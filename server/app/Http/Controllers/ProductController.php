@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use Carbon\Carbon;
@@ -109,5 +108,76 @@ class ProductController extends Controller
         } else {
             return new ProductResource(true, 'failed', null);
         }
+    }
+
+    // get latest product
+    public function getLatestProduct()
+    {
+        $latestProduct = Product::latest('created_at')->first();
+        if ($latestProduct) {
+            return new ProductResource(true, 'latest product', $latestProduct);
+        } else {
+            return new ProductResource(false, 'product not found', null);
+        }
+    }
+
+    // get 6 data product
+    public function getSixProduct()
+    {
+        $cacheKey = 'random_six_product';
+
+        $lastRandomTime = Cache::get($cacheKey . '_time');
+
+        // Jika waktu terakhir belum ada atau sudah lebih dari 12 jam
+        if (
+            !$lastRandomTime || Carbon::parse($lastRandomTime)->addHours(12)->lte(Carbon::now())
+        ) {
+            $sixProduct = Product::inRandomOrder()->take(6)->get();
+
+            if ($sixProduct->isNotEmpty()) {
+                // Simpan hasil pengacakan dan waktu terakhir
+                Cache::put($cacheKey, $sixProduct, now()->addHours(12));
+                Cache::put($cacheKey . '_time', now(), now()->addHours(12));
+
+                return new ProductResource(true, 'random six product', $sixProduct);
+            }
+        } else {
+            // Jika waktu terakhir belum mencapai 12 jam, kembalikan hasil pengacakan sebelumnya
+            $lastRandomProducts = Cache::get($cacheKey);
+
+            return new ProductResource(true, 'last random six product', $lastRandomProducts);
+        }
+
+        return new ProductResource(false, 'not eligible for random six product', null);
+    }
+
+    // get 3 data product
+    public function getThreeProduct()
+    {
+        $cacheKey = 'random_three_product';
+
+        $lastRandomTime = Cache::get($cacheKey . '_time');
+
+        // Jika waktu terakhir belum ada atau sudah lebih dari 12 jam
+        if (
+            !$lastRandomTime || Carbon::parse($lastRandomTime)->addHours(12)->lte(Carbon::now())
+        ) {
+            $threeProduct = Product::inRandomOrder()->take(3)->get();
+
+            if ($threeProduct->isNotEmpty()) {
+                // Simpan hasil pengacakan dan waktu terakhir
+                Cache::put($cacheKey, $threeProduct, now()->addHours(12));
+                Cache::put($cacheKey . '_time', now(), now()->addHours(12));
+
+                return new ProductResource(true, 'random three product', $threeProduct);
+            }
+        } else {
+            // Jika waktu terakhir belum mencapai 12 jam, kembalikan hasil pengacakan sebelumnya
+            $lastRandomProducts = Cache::get($cacheKey);
+
+            return new ProductResource(true, 'last random three product', $lastRandomProducts);
+        }
+
+        return new ProductResource(false, 'not eligible for random three product', null);
     }
 }
