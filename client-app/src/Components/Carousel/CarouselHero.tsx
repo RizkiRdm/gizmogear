@@ -1,16 +1,19 @@
 import { Box, Link as ChakraLink, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
-
-interface bannerProps {
-    title: string
-    description: string
-    slug: string
-    src: string
+interface ProductProps {
+    id: number;
+    title: string;
+    description: string;
+    slug: string;
+    image: string;
+    price: number;
 }
-
-const CarouselHero: React.FC<bannerProps> = ({ slug, title, src, description }) => {
-    const descripttionProduct = description.split(" ").slice(0, 10).join(" ")
+interface CarouselHeroProps {
+    products: ProductProps | null
+}
+const CarouselHero: React.FC<CarouselHeroProps> = ({ products }) => {
+    const descripttionProduct = products?.description.split(" ").slice(0, 10).join(" ")
     return (
         <Flex
             direction={{ base: "column", md: "row" }} // Flex direction column for mobile and tablet, row for larger screens
@@ -22,8 +25,8 @@ const CarouselHero: React.FC<bannerProps> = ({ slug, title, src, description }) 
         >
             {/* image hero */}
             <Image
-                src={src}
-                alt={title}
+                src={products?.image}
+                alt={products?.title}
                 objectFit="cover"
                 width="100%" // Ensure the image takes up full width
                 height="100%" // Ensure the image takes up full height
@@ -38,14 +41,14 @@ const CarouselHero: React.FC<bannerProps> = ({ slug, title, src, description }) 
             >
                 {/* title product */}
                 <Text color="white" fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold">
-                    {title}
+                    {products?.title}
                 </Text>
 
                 <Text color="white" fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" my={"2"}>
                     {descripttionProduct}
                 </Text>
                 {/* button/link */}
-                <ChakraLink as={Link} to={`/products/${slug}`} textDecoration="none" mt={{ base: 4, md: 0 }}>
+                <ChakraLink as={Link} to={`/products/${products?.slug}`} textDecoration="none" mt={{ base: 4, md: 0 }}>
                     <Button label="View Details" />
                 </ChakraLink>
             </Box>
