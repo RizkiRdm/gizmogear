@@ -24,7 +24,6 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 // Rute CRUD produk hanya bisa diakses oleh admin
 // Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 // });
-Route::apiResource('/products', ProductController::class);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']); // Endpoint untuk mendapatkan semua produk
