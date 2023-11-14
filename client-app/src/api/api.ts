@@ -8,6 +8,16 @@ interface ProductProps {
     price: number;
 }
 
+// fetch all data product
+export const fetchAllProduct = async () => {
+    try {
+        const res = await axios.get('http://localhost:8000/api/products')
+        const dataProduct: ProductProps[] = res.data.data
+        return dataProduct
+    } catch (error) {
+        console.error(error)
+    }
+}
 // fetch 6 random data product
 export const fetchSixProduct = async () => {
     try {

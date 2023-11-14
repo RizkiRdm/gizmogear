@@ -1,7 +1,14 @@
 import { Flex, MenuItem, MenuList, SimpleGrid, Text } from "@chakra-ui/react"
 import Navbar from "../../Components/Navbar/Navbar"
 import NavbarDropdown from "../../Components/Navbar/NavbarDropdown"
+import { fetchAllProduct } from "../../api/api"
+import { useQuery } from "react-query"
+import ProductCard from "../../Components/ProductCard/ProductCard"
+
 const ProductsPage = () => {
+    const { data, isError, isLoading } = useQuery('fetch all data', fetchAllProduct)
+
+    if (isError) return <Text>Error fetch product</Text>
     return (
         <>
             <Navbar />
@@ -25,8 +32,24 @@ const ProductsPage = () => {
             </Flex>
 
             <SimpleGrid>
-
-            </SimpleGrid>
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) : (
+                    <SimpleGrid columns={[1, 3, 4]}>
+                        {
+                            data?.map((product) => (
+                                <ProductCard
+                                    key={product.id}
+                                    src={product.image}
+                                    title={product.title}
+                                    slug={product.slug}
+                                    price={product.price}
+                                />
+                            ))
+                        }
+                    </SimpleGrid>
+                )}
+            </SimpleGrid >
         </>
     )
 }
