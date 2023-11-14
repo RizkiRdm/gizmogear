@@ -18,6 +18,7 @@ interface ProductProps {
 }
 
 const ProductCard: React.FC<ProductProps> = ({ src, title, price, slug }) => {
+    const splitTitle = title.split(" ").slice(0, 5).join(" ")
     return (
         <Box py={12}>
             <Box
@@ -49,7 +50,7 @@ const ProductCard: React.FC<ProductProps> = ({ src, title, price, slug }) => {
 
                 <Stack pt={10} align={'center'}>
                     <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-                        {title}
+                        {splitTitle}
                     </Heading>
                     <Stack direction={'row'} align={'center'}>
                         <Text fontWeight={800} fontSize={'xl'}>
