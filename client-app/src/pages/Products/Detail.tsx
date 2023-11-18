@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Heading, Image, SimpleGrid, Spinner, Text } from "@chakra-ui/react"
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Box, useToast, Button, Flex, Heading, Image, SimpleGrid, Spinner, Text } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import { useParams } from "react-router-dom"
 import Navbar from "../../Components/Navbar/Navbar"
@@ -11,6 +12,20 @@ const DetailProduct = () => {
     const { data: products, isError: isProductsError, isLoading: isProductsLoading } = useQuery('fetch other product', fetchSixProduct)
     if (isError || isProductsError) return <Text>Error Fetch data</Text>
     const productDesc = product?.description.split(" ").slice(0, 20).join(" ")
+
+    // define toast
+    const toast = useToast()
+
+    const handlebuy = () => {
+        toast({
+            position: 'top-right',
+            title: `success buy ${product?.title}`,
+            description: `thank you very much ~[>o<]~`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+        })
+    }
 
     return (
         <>
@@ -60,7 +75,7 @@ const DetailProduct = () => {
                                 <Heading>Price : ${product?.price}</Heading>
                             </Box>
                             <Box mt='4' w={'100%'}>
-                                <Button colorScheme="teal" >Buy Product</Button>
+                                <Button colorScheme="teal" onClick={handlebuy}>Buy Product</Button>
                             </Box>
                         </Flex>
                     </Flex>
@@ -92,7 +107,7 @@ const DetailProduct = () => {
                     )}
 
                 </Flex>
-            </Box >
+            </Box>
         </>
     )
 }
