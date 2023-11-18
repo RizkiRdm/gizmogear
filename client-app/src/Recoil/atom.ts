@@ -24,3 +24,8 @@ export const ThreeProductState = atom<ProductProps[]>({
     key: 'ThreeProductState',
     default: [],
 });
+
+export const filterProductState = atom({
+    key: 'filterProduct',
+    default: ''
+})

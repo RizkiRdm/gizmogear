@@ -1,14 +1,27 @@
 import { Flex, MenuItem, MenuList, SimpleGrid, Text } from "@chakra-ui/react"
+import { useQuery } from "react-query"
+import { useRecoilState } from "recoil"
 import Navbar from "../../Components/Navbar/Navbar"
 import NavbarDropdown from "../../Components/Navbar/NavbarDropdown"
-import { fetchAllProduct } from "../../api/api"
-import { useQuery } from "react-query"
 import ProductCard from "../../Components/ProductCard/ProductCard"
+import { filterProductState } from "../../Recoil/atom"
+import { fetchAllProduct, fetchCategoriesProduct, fetchFilteredProducts } from "../../api/api"
 
 const ProductsPage = () => {
-    const { data, isError, isLoading } = useQuery('fetch all data', fetchAllProduct)
+    const [selectedCategory, setSelectedCategory] = useRecoilState(filterProductState)
 
-    if (isError) return <Text>Error fetch product</Text>
+    const { data: products } = useQuery('fetch all data', fetchAllProduct)
+    const { data: categories, isError: isCategoriesError } = useQuery('fetch categories', fetchCategoriesProduct)
+    const { data: filteredProducts, isLoading, isError } = useQuery(
+        ['filteredProducts', selectedCategory],
+        () => fetchFilteredProducts(selectedCategory),
+        { enabled: !!selectedCategory }
+    );
+    if (isError || isCategoriesError) return <Text>Error fetch product</Text>
+
+    const handleCategorySelect = (category: string) => {
+        setSelectedCategory(category)
+    }
     return (
         <>
             <Navbar />
@@ -21,35 +34,39 @@ const ProductsPage = () => {
                 bg={"gray.900"}
                 p={6}
             >
-                <Text fontSize={"md"} color={"whiteAlpha.900"} mx={3}>Search By</Text>
-                <NavbarDropdown label="Category">
-                    <MenuList>
-                        <MenuItem>helo</MenuItem>
-                        <MenuItem>helo</MenuItem>
-                        <MenuItem>helo</MenuItem>
+                <Text fontSize={"md"} color={"whiteAlpha.900"} mx={3}>
+                    Search By
+                </Text>
+                <NavbarDropdown label={selectedCategory ? selectedCategory : 'Category'}>
+                    <MenuList zIndex={10}>
+                        {categories?.map((category, index) => (
+                            <MenuItem key={index} onClick={() => handleCategorySelect(category)}>{category}</MenuItem>
+                        ))}
                     </MenuList>
                 </NavbarDropdown>
-            </Flex>
+            </Flex >
 
-            <SimpleGrid>
+            <Flex
+                direction={{ base: "column", md: "row", lg: "row" }}
+                justify={"center"}
+                align={"center"}
+            >
                 {isLoading ? (
-                    <Text>Loading...</Text>
+                    <Text>loading..</Text>
                 ) : (
-                    <SimpleGrid columns={[1, 3, 4]}>
-                        {
-                            data?.map((product) => (
-                                <ProductCard
-                                    key={product.id}
-                                    src={product.image}
-                                    title={product.title}
-                                    slug={product.slug}
-                                    price={product.price}
-                                />
-                            ))
-                        }
+                    <SimpleGrid columns={[1, 2, 4]} spacing={2}>
+                        {(selectedCategory ? filteredProducts : products)?.map((product: { id: number; image: string; title: string; slug: string; price: number }) => (
+                            <ProductCard
+                                key={product.id}
+                                src={product.image}
+                                title={product.title}
+                                slug={product.slug}
+                                price={product.price}
+                            />
+                        ))}
                     </SimpleGrid>
                 )}
-            </SimpleGrid >
+            </Flex>
         </>
     )
 }

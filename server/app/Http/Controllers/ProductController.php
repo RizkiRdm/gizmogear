@@ -180,4 +180,43 @@ class ProductController extends Controller
 
         return new ProductResource(false, 'not eligible for random three product', null);
     }
+
+    // get data category
+    public function getCategories()
+    {
+        $products = Product::all(); // Gantilah ini dengan query yang sesuai untuk mendapatkan produk Anda
+        $categories = $products->pluck('category')->unique()->values()->toArray();
+
+        $result = ['category' => $categories];
+        return new ProductResource(true, 'list category', $result);
+    }
+
+    // filter product base category
+    public function filterProduct(ProductRequest $request)
+    {
+        $query = Product::query();
+
+        // Filtering on the server
+        if ($request->has('category')) {
+            $query->where('category', $request->input('category'));
+        }
+        $productFilter = $query->get();
+        if ($productFilter->isNotEmpty()) {
+            return new ProductResource(true, 'product with category', $productFilter);
+        } else {
+            return new ProductResource(false, 'product not found', null);
+        }
+    }
+
+    public function search(ProductRequest $request)
+    {
+        $query = Str::slug($request->input('q')); // Mengonversi nama produk menjadi slug
+        $products = Product::where('slug', 'like', "%$query%")->get();
+
+        // Mengembalikan hasil pencarian dalam format yang diinginkan
+        return response()->json([
+            'data' => $products,
+            'url' => "q=$query"
+        ]);
+    }
 }
