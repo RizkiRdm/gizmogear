@@ -78,9 +78,9 @@ const SearchInput: React.FC = () => {
                             <ListItem>Loading...</ListItem>
                         </List>
                     ) : searchResults.length > 0 ? (
-                        searchResults.map((suggestion) => (
+                        searchResults.map((suggestion, index) => (
                             <List
-                                key={suggestion.id}
+                                key={index}
                                 zIndex={1}
                                 position={'absolute'}
                                 bg={'gray.900'}
