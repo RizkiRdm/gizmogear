@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import Navbar from "../../Components/Navbar/Navbar"
 import ProductCard from "../../Components/ProductCard/ProductCard"
 import { fetchDetailProduct, fetchSixProduct } from "../../api/api"
+import { Helmet } from "react-helmet"
 
 const DetailProduct = () => {
     const { slug } = useParams()
@@ -29,6 +30,11 @@ const DetailProduct = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{product?.title}</title>
+                <meta name="description" content={product?.description} />
+            </Helmet>
+
             <Navbar />
 
             {/* detail product */}

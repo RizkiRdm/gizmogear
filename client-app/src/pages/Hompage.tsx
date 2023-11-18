@@ -10,12 +10,12 @@ import Section from "../Components/Section/Section"
 import { fetchLatestProduct, fetchSixProduct, fetchThreeProduct } from "../api/api"
 import { useRecoilState } from "recoil"
 import { ThreeProductState } from "../Recoil/atom"
+import { Helmet } from 'react-helmet';
+
 
 
 const Hompage = () => {
     const [threeProduct, setThreeProduct] = useRecoilState(ThreeProductState);
-
-
     const { data, isLoading, isError } = useQuery('fetchSixProduct', fetchSixProduct);
     const { data: threeProductData, isLoading: isLoadingThreeProduct, isError: isErrorThreeProduct } = useQuery('fetchThreeProduct', fetchThreeProduct);
     if (threeProductData) {
@@ -27,6 +27,11 @@ const Hompage = () => {
 
     return (
         <>
+            <Helmet>
+                <title>GizmoGear</title>
+                <meta name="description" content="GizmoGear adalah platform terbaik untuk menemukan gadget yang anda inginkan." />
+            </Helmet>
+
             <Navbar />
 
             {/* homepage */}

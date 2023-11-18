@@ -6,6 +6,7 @@ import NavbarDropdown from "../../Components/Navbar/NavbarDropdown"
 import ProductCard from "../../Components/ProductCard/ProductCard"
 import { filterProductState } from "../../Recoil/atom"
 import { fetchAllProduct, fetchCategoriesProduct, fetchFilteredProducts } from "../../api/api"
+import { Helmet } from "react-helmet"
 
 const ProductsPage = () => {
     const [selectedCategory, setSelectedCategory] = useRecoilState(filterProductState)
@@ -24,6 +25,13 @@ const ProductsPage = () => {
     }
     return (
         <>
+
+            <Helmet>
+                <title>GizmoGear</title>
+                <meta name="description" content="GizmoGear adalah platform terbaik untuk menemukan gadget yang anda inginkan." />
+            </Helmet>
+
+
             <Navbar />
 
             {/* dropdown filter */}
