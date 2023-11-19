@@ -43,6 +43,7 @@ class ProductRequest extends FormRequest
                     ];
                 }
             default:
+                return [];
                 break;
         }
     }
