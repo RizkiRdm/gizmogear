@@ -29,3 +29,18 @@ export const filterProductState = atom({
     key: 'filterProduct',
     default: ''
 })
+
+export const isLoggedInState = atom({
+    key: 'isLoggedInState',
+    default: false,
+});
+
+export const usernameState = atom({
+    key: 'usernameState',
+    default: '',
+});
+
+export const roleState = atom({
+    key: 'RoleState',
+    default: '',
+});

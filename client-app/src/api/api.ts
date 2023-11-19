@@ -1,5 +1,11 @@
 import axios from "axios";
 
+interface authProps {
+    data: string;
+    username: string
+    password: string
+}
+
 interface ProductProps {
     id: number;
     title: string;
@@ -86,4 +92,14 @@ export const fetchFilteredProducts = async (selectedCategory: string) => {
         throw new Error(`Error fetching filtered products: ${error}`);
     }
 };
-console.log(fetchFilteredProducts('console'))
+
+// login
+export const loginUser = async (credentials: authProps) => {
+    try {
+        const response = await axios.post('http://localhost:8000/api/login', credentials)
+        const { access_token, username, role } = response.data
+        return { access_token, username, role }
+    } catch (error) {
+        console.error(error)
+    }
+}
