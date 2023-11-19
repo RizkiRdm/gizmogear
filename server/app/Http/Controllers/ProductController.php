@@ -33,10 +33,16 @@ class ProductController extends Controller
         $validatedData = $request->validated();
         $validatedData['slug'] = Str::slug($validatedData['title']) . '-' . Str::random(10);
 
+        // upload image
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = $image->hashName();
-            $image->storeAs('public/images', $imageName);
+            $imageName = $image->hashName(); // Menggunakan hash name untuk nama unik gambar
+            $imagePath = 'images/' . $imageName;
+
+            // Menyimpan gambar ke penyimpanan (storage)
+            Storage::putFileAs('public', $image, $imagePath);
+
+            $validatedData['image'] = $imageName;
         }
 
         // create data
@@ -75,21 +81,27 @@ class ProductController extends Controller
             // Upload image
             $image = $request->file('image');
             $imageName = $image->hashName();
-            $image->storeAs('public/images', $imageName);
+            $imagePath = 'public/images/' . $imageName;
 
-            // Delete old image if exists
-            Storage::delete('public/images/' . basename($product->image));
+            // Simpan gambar baru
+            Storage::putFileAs('public/images', $image, $imageName);
+
+            // Hapus gambar lama jika ada
+            if ($product->image) {
+                Storage::delete('public/images/' . $product->image);
+            }
+
             $validatedData['image'] = $imageName;
         }
 
-        // Update the slug only if 'title' is provided in the request
+        // Update slug hanya jika 'title' disediakan dalam request
         if ($request->has('title')) {
             $validatedData['slug'] = Str::slug($validatedData['title']) . '-' . Str::random(10);
         }
 
         $product->update($validatedData);
 
-        return new ProductResource(true, 'success', $product);
+        return new ProductResource($product, 'Success', true);
     }
 
 
