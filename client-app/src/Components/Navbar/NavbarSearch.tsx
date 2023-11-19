@@ -51,7 +51,6 @@ const SearchInput: React.FC = () => {
         <Box
             position={'relative'}
             bg={'gray.900'}
-            className="relative text-slate-950"
             width={'100%'} // Menggunakan responsif utility classes
             mx="auto"
         >
