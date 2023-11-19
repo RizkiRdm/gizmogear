@@ -13,10 +13,10 @@ class Product extends Model
     protected $fillable = ['title', 'slug', 'category', 'description', 'price', 'image'];
 
     // accessor image
-    protected function Image(): Attribute
+    protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($image) => asset('/storage/images/' . $image)
+            get: fn ($image) => asset('/storage/images/' . $image),
         );
     }
 }
