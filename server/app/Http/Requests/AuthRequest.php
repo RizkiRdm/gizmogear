@@ -23,7 +23,7 @@ class AuthRequest extends FormRequest
     {
         return [
             'username' => 'required|string',
-            'password' => 'required|max:8',
+            'password' => 'required|min:8',
             'role' => 'nullable|in:admin,user',
         ];
     }
