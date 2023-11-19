@@ -21,12 +21,29 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => 'sometimes|required|string|max:255',
-            'category' => 'sometimes|required|string',
-            'description' => 'sometimes|required|string',
-            'price' => 'sometimes|required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        ];
+        switch ($this->method()) {
+            case 'POST': {
+                    return [
+                        'title' => 'required|string|max:255',
+                        'category' => 'required|string',
+                        'description' => 'required|string',
+                        'price' => 'required|numeric',
+                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH': {
+                    return [
+                        'title' => 'sometimes|required|string|max:255',
+                        'category' => 'sometimes|required|string',
+                        'description' => 'sometimes|required|string',
+                        'price' => 'sometimes|required|numeric',
+                        'image' => 'sometimes|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
+                    ];
+                }
+            default:
+                break;
+        }
     }
 }
