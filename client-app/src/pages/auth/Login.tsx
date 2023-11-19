@@ -1,10 +1,12 @@
-import { Box, Button, Link as ChakraLink, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { Link } from "react-router-dom"
-import Navbar from "../../Components/Navbar/Navbar"
+import { Box, Button, Link as ChakraLink, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
-
+import { SubmitHandler, useForm } from "react-hook-form"
+import { Link, useNavigate } from "react-router-dom"
+import { useSetRecoilState } from "recoil"
+import Navbar from "../../Components/Navbar/Navbar"
+import { isLoggedInState, roleState, usernameState } from "../../Recoil/atom"
+import { loginUser } from "../../api/api"
 interface inputProps {
     username: string
     password: string
@@ -13,16 +15,40 @@ interface inputProps {
 const Login = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
-
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<inputProps>();
 
-    const onSubmit = (data: string) => {
-        console.log(data)
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState)
+    const setUsername = useSetRecoilState(usernameState)
+    const setRole = useSetRecoilState(roleState)
+
+    const onSubmit: SubmitHandler = async (data: string) => {
+        try {
+            const { access_token, username, role } = await loginUser(data)
+            // jika login berhasil
+            sessionStorage.setItem('access_token', access_token);
+            sessionStorage.setItem('username', username);
+            sessionStorage.setItem('role', role);
+
+            setIsLoggedIn(true)
+            setUsername(username)
+            setRole(role)
+
+            if (role === 'admin') {
+                navigate('/dashboard')
+            } else {
+                navigate('/products')
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
     }
+
     return (
         <>
             {/* navbar */}
