@@ -1,4 +1,4 @@
-import { Box, Button, Link as ChakraLink, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
+import { Box, Button, Link as ChakraLink, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Spinner, Text, useToast } from "@chakra-ui/react"
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from "../../Components/Navbar/Navbar"
 import { useState } from "react"
@@ -15,6 +15,8 @@ const Register = () => {
 
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
+    const [isSubmitting, setIsSubmitting] = useState(false) // State untuk mengatur status submit
+
     const navigate = useNavigate()
 
     const {
@@ -23,14 +25,29 @@ const Register = () => {
         formState: { errors }
     } = useForm<inputProps>();
 
+    const toast = useToast()
+
     const onSubmit: SubmitHandler<inputProps> = async (data) => {
         try {
+            setIsSubmitting(true)
             const res = await registerUser(data)
             if (res) {
-                navigate('/login')
+                toast({
+                    position: 'top-right',
+                    title: `success Register`,
+                    description: `Have a nice day`,
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: false,
+                })
+                setTimeout(() => {
+                    setIsSubmitting(false)
+                    navigate('/login')
+                }, 3000);
             }
         } catch (error) {
             console.error(error)
+            setIsSubmitting(false)
         }
     }
 
@@ -107,7 +124,7 @@ const Register = () => {
                             {errors.password?.type === 'minLength' && (
                                 <Text>Password at least 8 character or more</Text>
                             )}
-                            <Button colorScheme="blue" type="submit">Login</Button>
+                            <Button colorScheme="blue" type="submit">{isSubmitting ? <Spinner /> : 'Register'}</Button>
                         </FormControl>
                     </form>
                     <Box mt={2}>
