@@ -1,5 +1,5 @@
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
-import { Box, Button, Link as ChakraLink, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
+import { Box, Button, Link as ChakraLink, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
@@ -8,6 +8,7 @@ import Navbar from "../../Components/Navbar/Navbar"
 import { isLoggedInState, roleState, usernameState } from "../../Recoil/atom"
 import { loginUser } from "../../api/api"
 interface inputProps {
+    data: string
     username: string
     password: string
 }
@@ -26,13 +27,14 @@ const Login = () => {
     const setUsername = useSetRecoilState(usernameState)
     const setRole = useSetRecoilState(roleState)
 
-    const onSubmit: SubmitHandler = async (data: string) => {
+    const onSubmit: SubmitHandler<inputProps> = async (data) => {
         try {
             const { access_token, username, role } = await loginUser(data)
+
             // jika login berhasil
-            sessionStorage.setItem('access_token', access_token);
-            sessionStorage.setItem('username', username);
-            sessionStorage.setItem('role', role);
+            localStorage.setItem('access_token', access_token);
+            localStorage.setItem('username', username);
+            localStorage.setItem('role', role);
 
             setIsLoggedIn(true)
             setUsername(username)
@@ -55,8 +57,7 @@ const Login = () => {
             <Navbar />
 
             {/* login form */}
-            <Box
-                display="flex"
+            <Flex
                 justifyContent="center"
                 alignItems="center"
                 height="100vh"
@@ -92,29 +93,31 @@ const Login = () => {
                             )}
 
                             {/* password */}
-                            <InputGroup size='md' my={3}>
-                                <Input
-                                    pr='4.5rem'
-                                    type={show ? 'text' : 'password'}
-                                    placeholder='Enter password'
-                                    {...register('password', {
-                                        required: true,
-                                        minLength: 8
-                                    })}
-                                />
-                                <InputRightElement width='4.5rem'>
-                                    <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                        {show ? <ViewIcon /> : <ViewOffIcon />}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                            {errors.password?.type === 'required' && (
-                                <Text>password is required</Text>
-                            )}
-                            {errors.password?.type === 'minLength' && (
-                                <Text>Password at least 8 character or more</Text>
-                            )}
-
+                            <Box my={3}>
+                                <FormLabel>Password</FormLabel>
+                                <InputGroup size='md'>
+                                    <Input
+                                        pr='4.5rem'
+                                        type={show ? 'text' : 'password'}
+                                        placeholder='Enter password'
+                                        {...register('password', {
+                                            required: true,
+                                            minLength: 8
+                                        })}
+                                    />
+                                    <InputRightElement width='4.5rem'>
+                                        <Button h='1.75rem' size='sm' onClick={handleClick}>
+                                            {show ? <ViewIcon /> : <ViewOffIcon />}
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                                {errors.password?.type === 'required' && (
+                                    <Text>password is required</Text>
+                                )}
+                                {errors.password?.type === 'minLength' && (
+                                    <Text>Password at least 8 character or more</Text>
+                                )}
+                            </Box>
                             <Button colorScheme="blue" type="submit">Login</Button>
                         </FormControl>
                     </form>
@@ -136,7 +139,7 @@ const Login = () => {
                         </Text>
                     </Box>
                 </Box>
-            </Box>
+            </Flex>
         </>
     )
 }
