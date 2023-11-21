@@ -1,12 +1,11 @@
-import { Flex, MenuItem, MenuList, SimpleGrid, Text } from "@chakra-ui/react"
+import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, SimpleGrid, Text } from "@chakra-ui/react"
+import { Helmet } from "react-helmet"
 import { useQuery } from "react-query"
 import { useRecoilState } from "recoil"
 import Navbar from "../../Components/Navbar/Navbar"
-import NavbarDropdown from "../../Components/Navbar/NavbarDropdown"
 import ProductCard from "../../Components/ProductCard/ProductCard"
 import { filterProductState } from "../../Recoil/atom"
 import { fetchAllProduct, fetchCategoriesProduct, fetchFilteredProducts } from "../../api/api"
-import { Helmet } from "react-helmet"
 
 const ProductsPage = () => {
     const [selectedCategory, setSelectedCategory] = useRecoilState(filterProductState)
@@ -45,13 +44,25 @@ const ProductsPage = () => {
                 <Text fontSize={"md"} color={"whiteAlpha.900"} mx={3}>
                     Search By
                 </Text>
-                <NavbarDropdown label={selectedCategory ? selectedCategory : 'Category'}>
-                    <MenuList zIndex={10}>
+                <Menu>
+                    <MenuButton
+                        as={Button}
+                        rounded={'full'}
+                        variant={'link'}
+                        cursor={'pointer'}
+                        minW={0}
+                    >
+                        <Text as={'p'} fontSize='inherit' color={"gray.100"}>
+                            {selectedCategory ? selectedCategory : 'Category'}
+                        </Text>
+                    </MenuButton>
+
+                    <MenuList zIndex={10} >
                         {categories?.map((category, index) => (
                             <MenuItem key={index} onClick={() => handleCategorySelect(category)}>{category}</MenuItem>
                         ))}
-                    </MenuList>
-                </NavbarDropdown>
+                    </MenuList >
+                </Menu>
             </Flex >
 
             <Flex
@@ -80,3 +91,4 @@ const ProductsPage = () => {
 }
 
 export default ProductsPage
+
