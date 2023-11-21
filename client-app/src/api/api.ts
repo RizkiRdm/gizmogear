@@ -103,3 +103,12 @@ export const loginUser = async (credentials: authProps) => {
         console.error(error)
     }
 }
+export const registerUser = async (credentials: authProps) => {
+    try {
+        const response = await axios.post('http://localhost:8000/api/register', credentials)
+        const registerData = response.data
+        return registerData
+    } catch (error) {
+        console.error(error)
+    }
+}
