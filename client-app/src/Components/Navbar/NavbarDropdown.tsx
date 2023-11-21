@@ -13,7 +13,7 @@ const NavbarDropdown: React.FC<navbarDropdownProps> = ({ children }) => {
     let label: string | JSX.Element = 'Hello User'
 
     if (isLoggedIn) {
-        label = isRole === 'admin' ? `${getUsername}(ADMIN)` : getUsername
+        label = isRole === 'admin' ? `${getUsername} (ADMIN)` : getUsername
     }
 
     return (
@@ -25,7 +25,7 @@ const NavbarDropdown: React.FC<navbarDropdownProps> = ({ children }) => {
                 cursor={'pointer'}
                 minW={0}
             >
-                <Text as={'p'} fontSize='inherit' color={"gray.100"}>
+                <Text as={'p'} fontSize='inherit' color={"gray.100"} textTransform={"capitalize"}>
                     {label}
                 </Text>
             </MenuButton>
