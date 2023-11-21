@@ -21,15 +21,14 @@ const CarouselHero: React.FC<CarouselHeroProps> = ({ products }) => {
             align="center" // Center vertically
             position="relative"
             width="100%" // Take up full width of the parent
-            height="100vh" // Set a minimum height to cover the whole viewport
+            height="75vh" // Set a minimum height to cover the whole viewport
         >
             {/* image hero */}
             <Image
                 src={products?.image}
                 alt={products?.title}
-                objectFit="cover"
+                objectFit="contain"
                 width="100%" // Ensure the image takes up full width
-                height="100%" // Ensure the image takes up full height
             />
 
             <Box
