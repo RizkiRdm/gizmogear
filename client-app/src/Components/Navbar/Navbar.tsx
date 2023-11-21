@@ -10,10 +10,12 @@ import {
     Text,
     useDisclosure
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import NavbarDropdown from './NavbarDropdown'
 import NavLink from './NavbarLink'
 import NavbarSearch from './NavbarSearch'
+import { useRecoilState } from 'recoil'
+import { isLoggedInState } from '../../Recoil/atom'
 
 const Links = [
     {
@@ -35,6 +37,21 @@ const authLink = [
 
 const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [isLogin] = useRecoilState(isLoggedInState)
+
+    // function logout
+    const navigate = useNavigate()
+    const handleLogout = () => {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+
+        window.location.reload()
+        setTimeout(() => {
+            navigate('/')
+        }, 200);
+    }
 
     return (
         <>
@@ -66,11 +83,16 @@ const Navbar = () => {
                             </HStack>
                         </Flex>
                         <Flex alignItems={'center'} display={{ base: 'none', md: 'flex' }}>
-                            <NavbarDropdown label={`Hello`}>
+                            <NavbarDropdown>
                                 <MenuList>
                                     {authLink.map((link, index) => (
                                         <MenuItem as={Link} key={index} to={link.url} color={"gray.700"}>{link.name}</MenuItem>
                                     ))}
+                                    {isLogin && (
+                                        <form onClick={handleLogout}>
+                                            <MenuItem color={"gray.700"}>Logout</MenuItem>
+                                        </form>
+                                    )}
                                 </MenuList>
                             </NavbarDropdown>
                         </Flex>
@@ -85,11 +107,16 @@ const Navbar = () => {
                                     <NavLink key={index} to={link.url}>{link.name}</NavLink>
                                 ))}
                                 <Flex justify={"start"} ms={2}>
-                                    <NavbarDropdown label={`Hello`}>
+                                    <NavbarDropdown>
                                         <MenuList>
                                             {authLink.map((link, index) => (
                                                 <MenuItem as={Link} key={index} to={link.url} color={"gray.700"}>{link.name}</MenuItem>
                                             ))}
+                                            {isLogin && (
+                                                <form onClick={handleLogout}>
+                                                    <MenuItem color={"gray.700"}>Logout</MenuItem>
+                                                </form>
+                                            )}
                                         </MenuList>
                                     </NavbarDropdown>
                                 </Flex>
