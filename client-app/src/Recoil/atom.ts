@@ -42,5 +42,5 @@ export const usernameState = atom({
 
 export const roleState = atom({
     key: 'RoleState',
-    default: '',
+    default: 'user',
 });
