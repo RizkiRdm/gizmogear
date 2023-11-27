@@ -4,13 +4,14 @@ import { IconType } from "react-icons";
 interface NavItemProps {
     icon: IconType;
     children: React.ReactNode;
+    link: string
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, link }: NavItemProps) => {
     return (
         <Box
             as="a"
-            href="#"
+            href={link}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -24,7 +25,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
                     bg: 'cyan.400',
                     color: 'white',
                 }}
-                {...rest}>
+            >
                 {icon && (
                     <Icon
                         mr="4"
