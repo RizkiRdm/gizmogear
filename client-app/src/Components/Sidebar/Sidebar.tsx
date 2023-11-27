@@ -8,7 +8,7 @@ import {
 import MobileNav from './MobileNav'
 import SidebarContent from './SidebarContent'
 
-const Sidebar = () => {
+const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -28,10 +28,8 @@ const Sidebar = () => {
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
 
-            {/* content dashboard */}
-            <Box ml={{ base: 0, md: 60 }} p="4">
+            {children}
 
-            </Box>
         </Box>
     )
 }
