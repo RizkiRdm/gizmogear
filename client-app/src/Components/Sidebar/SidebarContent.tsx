@@ -9,11 +9,21 @@ interface SidebarProps {
 
 interface LinkItemProps {
     name: string;
+    url: string;
     icon: IconType;
 }
 
-const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome },
+const LinkItems: LinkItemProps[] = [
+    {
+        url: '/dashboard/',
+        name: 'Home',
+        icon: FiHome,
+    },
+    {
+        url: '/dashboard/products',
+        name: 'Products',
+        icon: FiHome,
+    },
 ]
 
 
@@ -31,12 +41,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             {...rest}>
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
+                    GizmoGear
                 </Text>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
-            {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+            {LinkItems.map((link, index) => (
+                <NavItem key={index} icon={link.icon} link={link.url}>
                     {link.name}
                 </NavItem>
             ))}
