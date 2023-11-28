@@ -7,7 +7,7 @@ The planned application will be a mini ecommerce, for the time being it can only
 
 ## Screenshots
 
-<img src="screnshot-sample.png" width="400px">
+<img src="screnshot-sample.png" width="100%">
 
 
 ## Tech Stack
