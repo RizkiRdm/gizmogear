@@ -1,6 +1,7 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isLoggedInState, roleState } from "../Recoil/atom";
 import Dashboard from "../pages/Dashboard";
-import ProductManagement from "../pages/Dashboard/ProductManagement";
 import UserManagement from "../pages/Dashboard/UserManagement";
 import Hompage from "../pages/Hompage";
 import DetailProduct from "../pages/Products/Detail";
@@ -9,6 +10,9 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
 const App: React.FC = () => {
+    const isLogin = useRecoilValue(isLoggedInState)
+    const isAdmin = useRecoilValue(roleState)
+
     return (
         <Routes>
             {/* homepage route */}
@@ -23,12 +27,22 @@ const App: React.FC = () => {
             <Route path="/register" element={<Register />} />
 
             {/* Dashboard routes */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            {/* CRUD product route */}
-            <Route path="/dashboard/product" element={<ProductManagement />} />
-            <Route path="/dashboard/product/edit/:slug" element={<ProductManagement />} />
-
-            <Route path="/dashboard/user" element={<UserManagement />} />
+            <Route
+                path="/dashboard/*"
+                element={
+                    isLogin && isAdmin === 'admin' ? (
+                        <>
+                            <Dashboard />
+                            <Routes>
+                                <Route path="product/edit/:slug" element={<Dashboard />} />
+                                <Route path="user" element={<UserManagement />} />
+                            </Routes>
+                        </>
+                    ) : (
+                        <Navigate to="/" />
+                    )
+                }
+            />
         </Routes>
     )
 }
