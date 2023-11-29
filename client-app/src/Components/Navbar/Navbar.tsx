@@ -15,7 +15,7 @@ import NavbarDropdown from './NavbarDropdown'
 import NavLink from './NavbarLink'
 import NavbarSearch from './NavbarSearch'
 import { useRecoilState } from 'recoil'
-import { isLoggedInState } from '../../Recoil/atom'
+import { isLoggedInState, roleState } from '../../Recoil/atom'
 
 const Links = [
     {
@@ -38,6 +38,7 @@ const authLink = [
 const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isLogin] = useRecoilState(isLoggedInState)
+    const [isRole] = useRecoilState(roleState)
 
     // function logout
     const navigate = useNavigate()
@@ -73,9 +74,21 @@ const Navbar = () => {
 
                         {/* link navbar */}
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                            {Links.map((link, index) => (
-                                <NavLink key={index} to={link.url}>{link.name}</NavLink>
-                            ))}
+                            {/* if admin login */}
+                            {isLogin && isRole === 'admin' ? (
+                                <>
+                                    {
+                                        Links.map((link, index) => (
+                                            <NavLink key={index} to={link.url}>{link.name}</NavLink>
+                                        ))
+                                    }
+                                    <NavLink to={'/dashboard'}>Dashboard</NavLink>
+                                </>
+                            ) : (
+                                Links.map((link, index) => (
+                                    <NavLink key={index} to={link.url}>{link.name}</NavLink>
+                                ))
+                            )}
                         </HStack>
                         <Flex alignItems="center" justifyContent="center" flex={1}>
                             <HStack spacing={4} display={{ md: 'flex' }} mx={"auto"}>
