@@ -1,7 +1,33 @@
-import { Button, Flex, Image, Input, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import {
+    Button,
+    Flex,
+    HStack,
+    Image,
+    Input,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tr,
+    useDisclosure
+} from "@chakra-ui/react";
 import { SetStateAction, useState } from "react";
 import { useQuery } from "react-query";
 import { fetchAllProduct } from "../../api/api";
+import CreateModal from "../DashboardModal/CreateModal";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface inputProps {
+    title: string
+    image: string
+    category: string
+    description: string
+    price: number
+}
 
 const ProductTable = () => {
     const { data: products, isLoading, isError } = useQuery('fetchProduct', fetchAllProduct);
@@ -41,14 +67,35 @@ const ProductTable = () => {
 
     const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber)
 
+    // State untuk mengatur modal Create
+    const {
+        isOpen: isCreateOpen,
+        onOpen: onCreateOpen,
+        onClose: onCreateClose,
+    } = useDisclosure();
+
+    const handleShowModal = () => {
+        onCreateOpen();
+    };
+
+    // Penggunaan useForm disini
+    const { register, handleSubmit, formState: { errors } } = useForm<inputProps>();
+
+    const onCreateSubmit: SubmitHandler<inputProps> = (data) => {
+        console.log(data);
+        onCreateClose();
+    };
     return (
         <>
-            <Input
-                type="text"
-                placeholder="Search by product name..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <HStack>
+                <Input
+                    type="text"
+                    placeholder="Search by product name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Button colorScheme="blue" onClick={handleShowModal}>Create New Product</Button>
+            </HStack>
             {filteredProducts.length === 0 && <Text>No products found</Text>}
             <TableContainer>
                 <Table>
@@ -76,7 +123,7 @@ const ProductTable = () => {
                             <Tr key={product.id}>
                                 <Td>{index + 1}</Td>
                                 <Td>
-                                    <Image src={product.image} boxSize={'5em'} objectFit={'contain'} />
+                                    <Image src={product.image} boxSize={'20rem'} w={'100%'} objectFit={'cover'} />
                                 </Td>
                                 <Td>{product.title}</Td>
                                 <Td>{product.category}</Td>
@@ -103,6 +150,14 @@ const ProductTable = () => {
                     ))}
                 </Flex>
             ) : null}
+
+            <CreateModal
+                onOpen={isCreateOpen}
+                onClose={onCreateClose}
+                onSubmit={handleSubmit(onCreateSubmit)}
+                register={register}
+                errors={errors}
+            />
         </>
     )
 }
