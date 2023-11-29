@@ -10,7 +10,7 @@ interface ProductsProps {
 }
 
 interface SectionProps {
-    latestProduct: ProductsProps | null;
+    latestProduct: ProductsProps;
 }
 
 const Section: React.FC<SectionProps> = ({ latestProduct }) => {
@@ -69,8 +69,10 @@ const Section: React.FC<SectionProps> = ({ latestProduct }) => {
                         </Stack>
                     </Stack>
                 </Flex>
-                <Flex flex={1}>
+                <Flex flex={1} justify={'space-evenly'} align={'center'}>
                     <Image
+                        boxSize={'75%'}
+                        borderRadius={'md'}
                         alt={latestProduct?.title}
                         objectFit={'cover'}
                         src={latestProduct?.image}
