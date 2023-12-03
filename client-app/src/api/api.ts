@@ -13,7 +13,7 @@ interface ProductProps {
     category: string;
     slug: string;
     image: string;
-    price: number;
+    price: number | string;
 }
 
 // fetch all data product
@@ -108,6 +108,23 @@ export const registerUser = async (credentials: authProps) => {
         const response = await axios.post('http://localhost:8000/api/register', credentials)
         const registerData = response.data
         return registerData
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+// CRUD OPERATION API
+// CREATE data
+export const createProduct = async (data: ProductProps) => {
+    try {
+        const res = await axios.post('http://localhost:8000/api/products/create', data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+
+        const createData = res.data;
+        return createData;
     } catch (error) {
         console.error(error)
     }
