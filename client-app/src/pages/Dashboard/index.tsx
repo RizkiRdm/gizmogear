@@ -1,11 +1,16 @@
 import { Badge, Box, Card, CardBody, Flex, Heading, Stack, Text } from "@chakra-ui/react"
 import ProductTable from "../../Components/DashboardTable/ProductTable"
 import Navbar from "../../Components/Navbar/Navbar"
+import { Helmet } from "react-helmet"
 
 const Dashboard = () => {
     return (
         <>
             {/* content dashboard */}
+            <Helmet>
+                <title>GizmoGear - Dashboard</title>
+            </Helmet>
+
             <Navbar />
 
             <Flex p="4" direction={'column'}>
