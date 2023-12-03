@@ -44,3 +44,19 @@ export const roleState = atom({
     key: 'RoleState',
     default: 'user',
 });
+
+export const isAdminState = atom({
+    key: 'isAdmin',
+    default: true,
+});
+
+export const productFormState = atom({
+    key: 'productFormState',
+    default: {
+        title: '',
+        category: '',
+        description: '',
+        price: 0,
+        image: null,
+    },
+});
